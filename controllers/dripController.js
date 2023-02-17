@@ -2,6 +2,7 @@
 const express = require("express")
 const drip = express.Router()
 const { getAllDrip, getDrip, createDrip, updateDrip, deleteDrip } = require('../queries/drip')
+const {checkCategory, checkDescription, checkImage, checkNumber, checkStore, checkName} = require('../validations/helperFunctions')
 
 //Index
 drip.get("/", async (req, res) => {
@@ -25,7 +26,7 @@ drip.get("/:id", async (req, res) => {
 })
 
 //Create
-drip.post("/", async (req, res) => {
+drip.post("/", checkCategory, checkDescription, checkImage, checkNumber, checkStore, checkName, async (req, res) => {
     try {
         const drip = await createDrip(req.body)
         res.status(200).json(drip)
@@ -46,7 +47,7 @@ drip.delete("/:id", async (req, res) => {
 })
 
 //Update
-drip.put("/:id", async (req, res) => {
+drip.put("/:id", checkCategory, checkDescription, checkImage, checkNumber, checkStore, checkName, async (req, res) => {
     try {
         const { id } = req.params
         const updatedDrip = await updateDrip(id, req.body)
