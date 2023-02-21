@@ -48,7 +48,7 @@ const updateDrip = async (id, fashion) => {
     try {
         const updatedDrip = await db.one(
             'UPDATE fashions SET name=$1, price=$2, img_url=$3, img2_url=$4, category=$5, description=$6, store_name=$7, product_url=$8 WHERE id=$9 RETURNING *',
-            [fashion.name, fashion.price, fashion.img_url, fashion.img2_url, fashion.category, fashion.description, fashion.store_URL, id]
+            [fashion.name, fashion.price, fashion.img_url, fashion.img2_url, fashion.category, fashion.description, fashion.store_name, fashion.product_url, id]
         )
         return updatedDrip
     } catch (error) {
